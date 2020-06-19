@@ -1,0 +1,32 @@
+{
+  "name": "novem",
+  "version": "0.0.0",
+  "description": "Solution provider for JScrewIt",
+  "homepage": "https://github.com/fasttime/novem",
+  "bugs": "https://github.com/fasttime/novem/issues",
+  "license": "ISC",
+  "author": "Francesco Trotta <ft@fasttime.org> (https://github.com/fasttime)",
+  "files": [],
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fasttime/novem.git"
+  },
+  "scripts": {
+    "build": "npm install && gulp",
+    "test": "TS_NODE_PROJECT=test/tsconfig.json mocha --require=ts-node/register --check-leaks test/spec/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@fasttime/gulp-lint": "latest",
+    "@types/mocha": "latest",
+    "ebdd": "latest",
+    "eslint-plugin-ebdd": "latest",
+    "gulp": "latest",
+    "mocha": "latest",
+    "nyc": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  }
+}
