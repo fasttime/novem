@@ -1,4 +1,4 @@
-import { getSolutionType }  from '../../src/solution-type';
-import assert               from 'assert';
+import { calculateSolutionType }    from '../../src/solution-type';
+import assert                       from 'assert';
 
-it('getSolutionType', () => assert.throws(() => getSolutionType(''), SyntaxError));
+it('calculateSolutionType', () => assert.throws(() => calculateSolutionType(''), SyntaxError));

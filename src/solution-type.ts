@@ -1,6 +1,6 @@
 import { doEval, tryEval } from './eval';
 
-enum SolutionType
+export enum SolutionType
 {
     UNDEFINED               = 0b1,
     NUMERIC                 = 0b10,
@@ -11,7 +11,7 @@ enum SolutionType
     WEAK_PREFIXED_STRING    = 0b1000000,
 }
 
-export const getSolutionType =
+export const calculateSolutionType =
 (replacement: string): SolutionType | undefined =>
 {
     const value = doEval(replacement);
@@ -47,5 +47,3 @@ const isPrefixed =
 
 const isWeak =
 (replacement: string, value: unknown): boolean => `${value}` !== tryEval(`""+${replacement}`);
-
-export default SolutionType;

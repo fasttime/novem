@@ -1,4 +1,4 @@
-import SolutionType from './solution-type';
+import { SolutionType } from './solution-type';
 
 export interface Matcher extends ReadonlyArray<SolutionType>
 { }

@@ -1,8 +1,8 @@
-import { doEval }                           from '../../src/eval';
-import { DynamicSolution, SimpleSolution }  from '../../src/solution';
-import SolutionType, { getSolutionType }    from '../../src/solution-type';
-import assert                               from 'assert';
-import type { ParamCollection }             from 'ebdd';
+import { doEval }                               from '../../src/eval';
+import { DynamicSolution, SimpleSolution }      from '../../src/solution';
+import { SolutionType, calculateSolutionType }  from '../../src/solution-type';
+import assert                                   from 'assert';
+import type { ParamCollection }                 from 'ebdd';
 
 type SolutionInfo = [string, string, SolutionType];
 
@@ -626,14 +626,15 @@ describe
                         const solution = new DynamicSolution();
                         for (const [source, replacement, type] of subSolutions)
                         {
-                            assert.strictEqual(getSolutionType(replacement), type);
+                            assert.strictEqual(calculateSolutionType(replacement), type);
                             solution.append(new SimpleSolution(source, replacement, type));
                         }
 
                         assert.strictEqual(solution.replacement, expectedReplacement);
                         assert.strictEqual(solution.source, doEval(expectedReplacement));
                         assert.strictEqual(solution.type, expectedType);
-                        assert.strictEqual(getSolutionType(solution.replacement), expectedType);
+                        assert.strictEqual
+                        (calculateSolutionType(solution.replacement), expectedType);
                     },
                 );
             },

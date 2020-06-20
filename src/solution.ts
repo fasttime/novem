@@ -1,5 +1,5 @@
 import { Matcher, RULES, Rule, WEAK_MATCHER }   from './rule';
-import SolutionType                             from './solution-type';
+import { SolutionType }                         from './solution-type';
 
 export interface Solution
 {
