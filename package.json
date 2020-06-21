@@ -10,7 +10,7 @@
     "lib",
     "!.*"
   ],
-  "exports": "./lib/novem.mjs",
+  "exports": "./lib/novem.js",
   "types": "lib/novem.d.ts",
   "directories": {
     "lib": "lib",
@@ -38,5 +38,6 @@
     "rollup": "latest",
     "ts-node": "latest",
     "typescript": "latest"
-  }
+  },
+  "type": "module"
 }
