@@ -11,6 +11,7 @@
     "!.*"
   ],
   "exports": "./lib/novem.js",
+  "module": "./lib/novem.js",
   "types": "lib/novem.d.ts",
   "directories": {
     "lib": "lib",
