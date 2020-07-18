@@ -1,5 +1,5 @@
-import { Matcher, RULES, Rule, WEAK_MATCHER }   from './rule';
-import { SolutionType }                         from './solution-type';
+import { Matcher, RULES, Rule, WEAK_MATCHER, testType } from './rule';
+import { SolutionType }                                 from './solution-type';
 
 export interface Solution
 {
@@ -123,13 +123,8 @@ function calculateReplacement(solutions: readonly Solution[]): string
 
 function findRule(solutions: readonly Solution[]): Rule
 {
-    let rule: Rule;
-    for (rule of RULES)
-    {
-        if (testMatch(rule.match, solutions))
-            break;
-    }
-    return rule!;
+    const rule = RULES.find(({ match }: Rule): boolean => testMatch(match, solutions))!;
+    return rule;
 }
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
@@ -150,5 +145,3 @@ function testMatch(matchers: readonly Matcher[], solutions: readonly Solution[])
     );
     return test;
 }
-
-const testType = (matcher: Matcher, type: SolutionType): boolean => matcher.indexOf(type) >= 0;
