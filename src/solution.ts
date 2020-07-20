@@ -5,7 +5,7 @@ export interface Solution
 {
     readonly length:        number;
     readonly replacement:   string;
-    readonly source:        string;
+    readonly source:        string | undefined;
     readonly type:          SolutionType;
 }
 
@@ -17,7 +17,7 @@ export abstract class AbstractSolution implements Solution
     }
 
     public abstract get replacement():  string;
-    public abstract get source():       string;
+    public abstract get source():       string | undefined;
     public abstract get type():         SolutionType;
 }
 
@@ -58,9 +58,16 @@ export class DynamicSolution extends AbstractSolution
         return replacement;
     }
 
-    public get source(): string
+    public get source(): string | undefined
     {
-        const source = this._solutions.map(({ source }: Solution) => source).join('');
+        const sources = [];
+        for (const { source } of this._solutions)
+        {
+            if (source === undefined)
+                return undefined;
+            sources.push(source);
+        }
+        const source = sources.join('');
         return source;
     }
 
@@ -86,7 +93,7 @@ export class SimpleSolution extends AbstractSolution
 {
     public constructor
     (
-        public readonly source:         string,
+        public readonly source:         string | undefined,
         public readonly replacement:    string,
         public readonly type:           SolutionType,
     )

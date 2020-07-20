@@ -602,6 +602,37 @@ describe
 
         describe
         (
+            'source',
+            () =>
+            {
+                it
+                (
+                    'is a string when all contained solutions have a source',
+                    () =>
+                    {
+                        const solution = new DynamicSolution();
+                        solution.append(new SimpleSolution('0', '+[]', SolutionType.WEAK_NUMERIC));
+                        solution.append(new SimpleSolution('', '[]', SolutionType.OBJECT));
+                        assert.strictEqual(solution.source, '0');
+                    },
+                );
+
+                it
+                (
+                    'is undefined when not all contained solutions have a source',
+                    () =>
+                    {
+                        const solution = new DynamicSolution();
+                        solution.append(new SimpleSolution('0', '+[]', SolutionType.WEAK_NUMERIC));
+                        solution.append(new SimpleSolution(undefined, '[]', SolutionType.OBJECT));
+                        assert.strictEqual(solution.source, undefined);
+                    },
+                );
+            },
+        );
+
+        describe
+        (
             'when containing mixed solutions',
             () =>
             {
