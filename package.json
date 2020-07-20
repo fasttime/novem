@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@fasttime/gulp-lint": "latest",
+    "@types/ebdd": "npm:ebdd@latest",
     "@types/mocha": "latest",
     "ebdd": "latest",
     "eslint-plugin-ebdd": "latest",
