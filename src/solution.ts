@@ -1,16 +1,42 @@
-import { Matcher, RULES, Rule, WEAK_MATCHER, testType } from './rule';
-import { SolutionType }                                 from './solution-type';
+import { RULES, Rule }                                                          from './rule';
+import { SolutionType }
+from './solution-type';
+import { TypeSet, includesType, isArithmetic, isString, isUndefined, isWeak }   from './type-set';
 
 export interface Solution
 {
+    readonly isArithmetic:  boolean;
+    readonly isString:      boolean;
+    readonly isUndefined:   boolean;
+    readonly isWeak:        boolean;
     readonly length:        number;
     readonly replacement:   string;
     readonly source:        string | undefined;
     readonly type:          SolutionType;
 }
 
-export abstract class AbstractSolution implements Solution
+abstract class AbstractSolution implements Solution
 {
+    public get isArithmetic(): boolean
+    {
+        return isArithmetic(this.type);
+    }
+
+    public get isString(): boolean
+    {
+        return isString(this.type);
+    }
+
+    public get isUndefined(): boolean
+    {
+        return isUndefined(this.type);
+    }
+
+    public get isWeak(): boolean
+    {
+        return isWeak(this.type);
+    }
+
     public get length(): number
     {
         return this.replacement.length;
@@ -20,14 +46,6 @@ export abstract class AbstractSolution implements Solution
     public abstract get source():       string | undefined;
     public abstract get type():         SolutionType;
 }
-
-export const EMPTY_SOLUTION: Solution =
-{
-    length:         2,
-    replacement:    '[]',
-    source:         '',
-    type:           SolutionType.OBJECT,
-};
 
 export class DynamicSolution extends AbstractSolution
 {
@@ -102,6 +120,8 @@ export class SimpleSolution extends AbstractSolution
     }
 }
 
+export const EMPTY_SOLUTION: Solution = new SimpleSolution('', '[]', SolutionType.OBJECT);
+
 function calculateReplacement(solutions: readonly Solution[]): string
 {
     switch (solutions.length)
@@ -112,15 +132,15 @@ function calculateReplacement(solutions: readonly Solution[]): string
             return solutions[0].replacement;
         default:
         {
-            const { match, replace } = findRule(solutions);
-            const matcherCount = match.length;
-            const replacements = solutions.slice(0, matcherCount).map(getReplacement);
+            const { typeSet, replace } = findRule(solutions);
+            const typeSetCount = typeSet.length;
+            const replacements = solutions.slice(0, typeSetCount).map(getReplacement);
             const replacement =
             replace(...replacements) +
-            solutions.slice(matcherCount).map
+            solutions.slice(typeSetCount).map
             (
                 ({ replacement, type }: Solution): string =>
-                testType(WEAK_MATCHER, type) ? `+(${replacement})` : `+${replacement}`,
+                isWeak(type) ? `+(${replacement})` : `+${replacement}`,
             )
             .join('');
             return replacement;
@@ -130,23 +150,23 @@ function calculateReplacement(solutions: readonly Solution[]): string
 
 function findRule(solutions: readonly Solution[]): Rule
 {
-    const rule = RULES.find(({ match }: Rule): boolean => testMatch(match, solutions))!;
+    const rule = RULES.find(({ typeSet }: Rule): boolean => includesTypeSet(typeSet, solutions))!;
     return rule;
 }
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
 
-function testMatch(matchers: readonly Matcher[], solutions: readonly Solution[]): boolean
+function includesTypeSet(typeSets: readonly TypeSet[], solutions: readonly Solution[]): boolean
 {
-    if (matchers.length > solutions.length)
+    if (typeSets.length > solutions.length)
         return false;
     const test =
-    matchers.every
+    typeSets.every
     (
-        (matcher: Matcher, index: number) =>
+        (typeSet: TypeSet, index: number) =>
         {
             const solution = solutions[index];
-            const test = testType(matcher, solution.type);
+            const test = includesType(typeSet, solution.type);
             return test;
         },
     );

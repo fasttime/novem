@@ -11,6 +11,8 @@ export enum SolutionType
     WEAK_PREFIXED_STRING    = 0b1000000,
 }
 
+Object.freeze(SolutionType);
+
 export const calculateSolutionType =
 (replacement: string): SolutionType | undefined =>
 {
