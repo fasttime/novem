@@ -12,7 +12,7 @@ const { dest, parallel, series, src } = gulp;
 
 export async function clean()
 {
-    const paths = ['.nyc_output', '.tmp-out', 'coverage', 'lib'];
+    const paths = ['.nyc_output', '.tmp-out', 'coverage', 'lib', 'test/node-legacy'];
     const options = { recursive: true };
     await Promise.all(paths.map(path => fs.promises.rmdir(path, options)));
 }
@@ -27,13 +27,13 @@ export function lint()
             parserOptions: { project: 'tsconfig.json', sourceType: 'module' },
         },
         {
-            src: 'test/**/*.ts',
+            src: 'test/spec/**/*.ts',
             envs: ['ebdd/ebdd', 'mocha'],
             parserOptions: { project: 'tsconfig.json', sourceType: 'module' },
             plugins: ['ebdd'],
         },
         {
-            src: '*.js',
+            src: ['*.js', 'build/**/*.js'],
             envs: ['node'],
             parserOptions: { ecmaVersion: 2020, sourceType: 'module' },
         },
