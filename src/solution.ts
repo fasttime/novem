@@ -150,8 +150,16 @@ function calculateReplacement(solutions: readonly Solution[]): string
 
 function findRule(solutions: readonly Solution[]): Rule
 {
-    const rule = RULES.find(({ typeSet }: Rule): boolean => includesTypeSet(typeSet, solutions))!;
-    return rule;
+    let returnValue: Rule;
+    for (const rule of RULES)
+    {
+        if (includesTypeSet(rule.typeSet, solutions))
+        {
+            returnValue = rule;
+            break;
+        }
+    }
+    return returnValue!;
 }
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
