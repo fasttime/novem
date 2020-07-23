@@ -52,9 +52,9 @@ export function test(callback)
         '--reporter=html',
         '--reporter=text-summary',
         mochaPath,
+        '--check-leaks',
         '--require=ts-node/register',
         '--ui=ebdd',
-        '--check-leaks',
         'test/spec/**/*.spec.ts',
     ];
     const forkOpts =
