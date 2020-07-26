@@ -132,8 +132,8 @@ function calculateReplacement(solutions: readonly Solution[]): string
             return solutions[0].replacement;
         default:
         {
-            const { typeSet, replace } = findRule(solutions);
-            const typeSetCount = typeSet.length;
+            const { typeSetList, replace } = findRule(solutions);
+            const typeSetCount = typeSetList.length;
             const replacements = solutions.slice(0, typeSetCount).map(getReplacement);
             const replacement =
             replace(...replacements) +
@@ -153,7 +153,7 @@ function findRule(solutions: readonly Solution[]): Rule
     let returnValue: Rule;
     for (const rule of RULES)
     {
-        if (includesTypeSet(rule.typeSet, solutions))
+        if (matchSolutions(rule.typeSetList, solutions))
         {
             returnValue = rule;
             break;
@@ -164,7 +164,7 @@ function findRule(solutions: readonly Solution[]): Rule
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
 
-function includesTypeSet(typeSets: readonly TypeSet[], solutions: readonly Solution[]): boolean
+function matchSolutions(typeSets: readonly TypeSet[], solutions: readonly Solution[]): boolean
 {
     if (typeSets.length > solutions.length)
         return false;
