@@ -23,7 +23,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[]+[][[]]+[][[]]+[][[]]',
     },
     {
@@ -33,7 +33,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['false', '![]', SolutionType.NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[]+[][[]]+[][[]]+![]',
     },
     {
@@ -73,7 +73,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['undefined0', '[][[]]+[+[]]', SolutionType.PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[]+[][[]]+[][[]]+[][[]]+[+[]]',
     },
     {
@@ -86,6 +86,16 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[][[]]+([][[]]+(+[]+[+[]]))',
     },
+    {
+        subSolutions:
+        [
+            ['undefined', '[][[]]', SolutionType.UNDEFINED],
+            ['undefined', '[][[]]', SolutionType.UNDEFINED],
+            ['f0', '([]+![])[+[]]+(+[])', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.PREFIXED_STRING,
+        expectedReplacement: '[][[]]+([][[]]+([]+![])[+[]]+(+[]))',
+    },
 
     // UNDEFINED
     {
@@ -94,7 +104,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[]+[][[]]+[][[]]',
     },
     {
@@ -151,6 +161,15 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[][[]]+(+!![]+[+[]])',
     },
+    {
+        subSolutions:
+        [
+            ['undefined', '[][[]]', SolutionType.UNDEFINED],
+            ['tfalse', '([]+!![])[+[]]+![]', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.PREFIXED_STRING,
+        expectedReplacement: '[][[]]+([]+!![])[+[]]+![]',
+    },
 
     // NUMERIC
     {
@@ -159,7 +178,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['true', '!![]', SolutionType.NUMERIC],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[!![]]+[][[]]',
     },
     {
@@ -168,7 +187,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['false', '![]', SolutionType.NUMERIC],
             ['true', '!![]', SolutionType.NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+!![]',
     },
     {
@@ -204,7 +223,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['false', '![]', SolutionType.NUMERIC],
             ['falsefalse', '![]+[![]]', SolutionType.PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+![]+[![]]',
     },
     {
@@ -216,6 +235,15 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '![]+(+[]+[+[]])',
     },
+    {
+        subSolutions:
+        [
+            ['false', '![]', SolutionType.NUMERIC],
+            ['aa', '([]+![])[+!![]]+([]+![])[+!![]]', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.PREFIXED_STRING,
+        expectedReplacement: '![]+([]+![])[+!![]]+([]+![])[+!![]]',
+    },
 
     // WEAK_NUMERIC
     {
@@ -224,7 +252,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['0', '+[]', SolutionType.WEAK_NUMERIC],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+[][[]]',
     },
     {
@@ -233,7 +261,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['0', '+[]', SolutionType.WEAK_NUMERIC],
             ['true', '!![]', SolutionType.NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+!![]',
     },
     {
@@ -269,7 +297,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['1', '+!![]', SolutionType.WEAK_NUMERIC],
             ['false', '![]+[]', SolutionType.PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+!![]]+![]+[]',
     },
     {
@@ -281,6 +309,15 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+!![]+(+[]+[+[]])',
     },
+    {
+        subSolutions:
+        [
+            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['falsefalse', '[![]]+![]', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.WEAK_PREFIXED_STRING,
+        expectedReplacement: '+!![]+[![]]+![]',
+    },
 
     // OBJECT
     {
@@ -289,7 +326,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['1', '[+!![]]', SolutionType.OBJECT],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+!![]]+[][[]]',
     },
     {
@@ -298,7 +335,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['false', '[![]]', SolutionType.OBJECT],
             ['false', '![]', SolutionType.NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+![]',
     },
     {
@@ -307,7 +344,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['false', '[![]]', SolutionType.OBJECT],
             ['2', '!![]+!![]', SolutionType.WEAK_NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+(!![]+!![])',
     },
     {
@@ -316,17 +353,17 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['false', '[![]]', SolutionType.OBJECT],
             ['true', '[!![]]', SolutionType.OBJECT],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+[!![]]',
     },
     {
         subSolutions:
         [
             ['0', '[+[]]', SolutionType.OBJECT],
-            ['12', '[+!![]]+(!![]+!![])', SolutionType.STRING],
+            ['t', '(!![]+[])[+[]]', SolutionType.STRING],
         ],
-        expectedType: SolutionType.STRING,
-        expectedReplacement: '[+[]]+[+!![]]+(!![]+!![])',
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+(!![]+[])[+[]]',
     },
     {
         subSolutions:
@@ -334,7 +371,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['0', '[+[]]', SolutionType.OBJECT],
             ['truefalse', '!![]+[![]]', SolutionType.PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+!![]+[![]]',
     },
     {
@@ -343,8 +380,17 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['0', '[+[]]', SolutionType.OBJECT],
             ['12', '+!![]+[!![]+!![]]', SolutionType.WEAK_PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+(+!![]+[!![]+!![]])',
+    },
+    {
+        subSolutions:
+        [
+            ['0', '[+[]]', SolutionType.OBJECT],
+            ['12', '[+!![]]+(!![]+!![])', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+[+!![]]+(!![]+!![])',
     },
 
     // STRING
@@ -354,17 +400,17 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+[][[]]',
     },
     {
         subSolutions:
         [
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
-            ['false', '![]', SolutionType.NUMERIC],
+            ['0', '[[]][+[]]++', SolutionType.NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
-        expectedReplacement: '(![]+[])[+!![]]+![]',
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '(![]+[])[+!![]]+[[]][+[]]++',
     },
     {
         subSolutions:
@@ -372,7 +418,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['0', '+[]', SolutionType.WEAK_NUMERIC],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+(+[])',
     },
     {
@@ -381,7 +427,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['0', '[+[]]', SolutionType.OBJECT],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+[+[]]',
     },
     {
@@ -390,7 +436,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['f', '(![]+[])[+[]]', SolutionType.STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+(![]+[])[+[]]',
     },
     {
@@ -399,7 +445,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['false0', '![]+[+[]]', SolutionType.PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+![]+[+[]]',
     },
     {
@@ -408,8 +454,17 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
             ['10', '+!![]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
         ],
-        expectedType: SolutionType.STRING,
+        expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+(+!![]+[+[]])',
+    },
+    {
+        subSolutions:
+        [
+            ['a', '(![]+[])[+!![]]', SolutionType.STRING],
+            ['ff', '(![]+[])[+[]]+(![]+[])[+[]]', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '(![]+[])[+!![]]+(![]+[])[+[]]+(![]+[])[+[]]',
     },
 
     // PREFIXED_STRING
@@ -453,10 +508,10 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['true0', '!![]+[+[]]', SolutionType.PREFIXED_STRING],
-            ['', '[]+[]', SolutionType.STRING],
+            ['', '[[]+[]][+[]]', SolutionType.STRING],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
-        expectedReplacement: '!![]+[+[]]+[]+[]',
+        expectedReplacement: '!![]+[+[]]+[[]+[]][+[]]',
     },
     {
         subSolutions:
@@ -475,6 +530,15 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '!![]+[+[]]+(+[]+[![]])',
+    },
+    {
+        subSolutions:
+        [
+            ['true0', '!![]+[+[]]', SolutionType.PREFIXED_STRING],
+            ['', '[]+[]', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.PREFIXED_STRING,
+        expectedReplacement: '!![]+[+[]]+[]+[]',
     },
 
     // WEAK_PREFIXED_STRING
@@ -518,10 +582,10 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
-            ['00', '[+[]]+(+[])', SolutionType.STRING],
+            ['f', '(![]+[])[+[]]', SolutionType.STRING],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
-        expectedReplacement: '+[]+[+[]]+[+[]]+(+[])',
+        expectedReplacement: '+[]+[+[]]+(![]+[])[+[]]',
     },
     {
         subSolutions:
@@ -540,6 +604,15 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+[]+[+[]]+(+!![]+[+[]])',
+    },
+    {
+        subSolutions:
+        [
+            ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
+            ['00', '[+[]]+(+[])', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.WEAK_PREFIXED_STRING,
+        expectedReplacement: '+[]+[+[]]+[+[]]+(+[])',
     },
 ];
 
@@ -596,7 +669,7 @@ describe
                 assert.strictEqual(solution.length, expectedReplacement.length);
                 assert.strictEqual(solution.replacement, expectedReplacement);
                 assert.strictEqual(solution.source, 'cba012');
-                assert.strictEqual(solution.type, SolutionType.STRING);
+                assert.strictEqual(solution.type, SolutionType.COMBINED_STRING);
             },
         );
 

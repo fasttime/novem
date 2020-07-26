@@ -17,7 +17,13 @@ export const isArithmetic =
 makeIsAttr(SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.WEAK_NUMERIC);
 
 export const isString =
-makeIsAttr(SolutionType.STRING, SolutionType.PREFIXED_STRING, SolutionType.WEAK_PREFIXED_STRING);
+makeIsAttr
+(
+    SolutionType.STRING,
+    SolutionType.PREFIXED_STRING,
+    SolutionType.WEAK_PREFIXED_STRING,
+    SolutionType.COMBINED_STRING,
+);
 
 export const isUndefined =
 makeIsAttr(SolutionType.UNDEFINED);

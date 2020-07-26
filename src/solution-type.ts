@@ -9,6 +9,7 @@ export enum SolutionType
     STRING                  = 0b10000,
     PREFIXED_STRING         = 0b100000,
     WEAK_PREFIXED_STRING    = 0b1000000,
+    COMBINED_STRING         = 0b10000000,
 }
 
 Object.freeze(SolutionType);
@@ -35,14 +36,20 @@ export const calculateSolutionType =
         case 'string':
             {
                 const type =
+                isCombined(replacement, value) ?
                 isPrefixed(replacement, value) ?
                 isWeak(replacement, value) ?
-                SolutionType.WEAK_PREFIXED_STRING : SolutionType.PREFIXED_STRING :
+                SolutionType.WEAK_PREFIXED_STRING :
+                SolutionType.PREFIXED_STRING :
+                SolutionType.COMBINED_STRING :
                 SolutionType.STRING;
                 return type;
             }
     }
 };
+
+const isCombined =
+(replacement: string, value: unknown): boolean => !value !== tryEval(`!${replacement}`);
 
 const isPrefixed =
 (replacement: string, value: unknown): boolean => `0${value}` !== tryEval(`0+${replacement}`);

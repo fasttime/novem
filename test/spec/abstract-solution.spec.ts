@@ -47,6 +47,11 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         solutionType:   SolutionType.WEAK_PREFIXED_STRING,
         expectedValue:  false,
     },
+    {
+        isAttrName:     'isArithmetic',
+        solutionType:   SolutionType.COMBINED_STRING,
+        expectedValue:  false,
+    },
 
     {
         isAttrName:     'isString',
@@ -83,6 +88,11 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         solutionType:   SolutionType.WEAK_PREFIXED_STRING,
         expectedValue:  true,
     },
+    {
+        isAttrName:     'isString',
+        solutionType:   SolutionType.COMBINED_STRING,
+        expectedValue:  true,
+    },
 
     {
         isAttrName:     'isUndefined',
@@ -119,6 +129,11 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         solutionType:   SolutionType.WEAK_PREFIXED_STRING,
         expectedValue:  false,
     },
+    {
+        isAttrName:     'isUndefined',
+        solutionType:   SolutionType.COMBINED_STRING,
+        expectedValue:  false,
+    },
 
     {
         isAttrName:     'isWeak',
@@ -154,6 +169,11 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         isAttrName:     'isWeak',
         solutionType:   SolutionType.WEAK_PREFIXED_STRING,
         expectedValue:  true,
+    },
+    {
+        isAttrName:     'isWeak',
+        solutionType:   SolutionType.COMBINED_STRING,
+        expectedValue:  false,
     },
 ];
 

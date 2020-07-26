@@ -36,7 +36,7 @@ export const RULES: readonly Rule[] =
         [
             createTypeSet(SolutionType.UNDEFINED),
             createTypeSet(SolutionType.UNDEFINED),
-            createTypeSet(SolutionType.OBJECT, SolutionType.STRING),
+            createTypeSet(SolutionType.OBJECT, SolutionType.STRING, SolutionType.COMBINED_STRING),
         ],
         replace: (r1: string, r2: string, r3: string): string => `${r1}+(${r2}+${r3})`,
         solutionType: SolutionType.PREFIXED_STRING,
@@ -48,7 +48,7 @@ export const RULES: readonly Rule[] =
             createTypeSet(SolutionType.UNDEFINED),
         ],
         replace: (r1: string, r2: string): string => `[]+${r1}+${r2}`,
-        solutionType: SolutionType.STRING,
+        solutionType: SolutionType.COMBINED_STRING,
     },
     {
         typeSet:
@@ -83,7 +83,7 @@ export const RULES: readonly Rule[] =
             (SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.PREFIXED_STRING),
         ],
         replace: (r1: string, r2: string): string => `[${r1}]+${r2}`,
-        solutionType: SolutionType.STRING,
+        solutionType: SolutionType.COMBINED_STRING,
     },
     {
         typeSet:
@@ -109,7 +109,7 @@ export const RULES: readonly Rule[] =
             (SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.PREFIXED_STRING),
         ],
         replace: (r1: string, r2: string): string => `[${r1}]+${r2}`,
-        solutionType: SolutionType.STRING,
+        solutionType: SolutionType.COMBINED_STRING,
     },
     {
         typeSet:
@@ -126,10 +126,11 @@ export const RULES: readonly Rule[] =
         solutionType: SolutionType.WEAK_PREFIXED_STRING,
     },
 
-    // OBJECT, STRING
+    // OBJECT, STRING, COMBINED_STRING
     {
-        typeSet: [createTypeSet(SolutionType.OBJECT, SolutionType.STRING)],
+        typeSet:
+        [createTypeSet(SolutionType.OBJECT, SolutionType.STRING, SolutionType.COMBINED_STRING)],
         replace: (r1: string): string => r1,
-        solutionType: SolutionType.STRING,
+        solutionType: SolutionType.COMBINED_STRING,
     },
 ];
