@@ -5,7 +5,7 @@ import { ParamCollection }  from 'ebdd';
 
 interface IsAttrTestInfo
 {
-    readonly isAttrName:    'isArithmetic' | 'isString' | 'isUndefined' | 'isWeak';
+    readonly isAttrName:    'isArithmetic' | 'isLoose' | 'isString' | 'isUndefined' | 'isWeak';
     readonly solutionType:  SolutionType;
     readonly expectedValue: boolean;
 }
@@ -51,6 +51,47 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         isAttrName:     'isArithmetic',
         solutionType:   SolutionType.COMBINED_STRING,
         expectedValue:  false,
+    },
+
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.UNDEFINED,
+        expectedValue:  false,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.NUMERIC,
+        expectedValue:  false,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.WEAK_NUMERIC,
+        expectedValue:  true,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.OBJECT,
+        expectedValue:  false,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.STRING,
+        expectedValue:  false,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.PREFIXED_STRING,
+        expectedValue:  true,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.WEAK_PREFIXED_STRING,
+        expectedValue:  true,
+    },
+    {
+        isAttrName:     'isLoose',
+        solutionType:   SolutionType.COMBINED_STRING,
+        expectedValue:  true,
     },
 
     {

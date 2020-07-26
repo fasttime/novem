@@ -16,6 +16,15 @@ export const includesType =
 export const isArithmetic =
 makeIsAttr(SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.WEAK_NUMERIC);
 
+export const isLoose =
+makeIsAttr
+(
+    SolutionType.WEAK_NUMERIC,
+    SolutionType.PREFIXED_STRING,
+    SolutionType.WEAK_PREFIXED_STRING,
+    SolutionType.COMBINED_STRING,
+);
+
 export const isString =
 makeIsAttr
 (

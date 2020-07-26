@@ -1,7 +1,8 @@
-import { RULES, Rule }                                                          from './rule';
+import { RULES, Rule } from './rule';
 import { SolutionType }
 from './solution-type';
-import { TypeSet, includesType, isArithmetic, isString, isUndefined, isWeak }   from './type-set';
+import { TypeSet, includesType, isArithmetic, isLoose, isString, isUndefined, isWeak }
+from './type-set';
 
 export interface Solution
 {
@@ -20,6 +21,11 @@ abstract class AbstractSolution implements Solution
     public get isArithmetic(): boolean
     {
         return isArithmetic(this.type);
+    }
+
+    public get isLoose(): boolean
+    {
+        return isLoose(this.type);
     }
 
     public get isString(): boolean
