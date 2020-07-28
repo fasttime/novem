@@ -1,8 +1,6 @@
-import { RULES, Rule } from './rule';
-import { SolutionType }
-from './solution-type';
-import { TypeSet, includesType, isArithmetic, isLoose, isString, isUndefined, isWeak }
-from './type-set';
+import { Rule, findRule }                                       from './rule';
+import { SolutionType }                                         from './solution-type';
+import { isArithmetic, isLoose, isString, isUndefined, isWeak } from './type-set';
 
 export interface Solution
 {
@@ -106,7 +104,7 @@ export class DynamicSolution extends AbstractSolution
                 return solutions[0].type;
             default:
                 {
-                    const { solutionType } = findRule(solutions);
+                    const { solutionType } = findRuleBySolutions(solutions);
                     return solutionType;
                 }
         }
@@ -138,51 +136,22 @@ function calculateReplacement(solutions: readonly Solution[]): string
             return solutions[0].replacement;
         default:
         {
-            const { typeSetList, replace } = findRule(solutions);
+            const { replace, typeSetList } = findRuleBySolutions(solutions);
             const typeSetCount = typeSetList.length;
             const replacements = solutions.slice(0, typeSetCount).map(getReplacement);
-            const replacement =
-            replace(...replacements) +
-            solutions.slice(typeSetCount).map
-            (
-                ({ replacement, type }: Solution): string =>
-                isWeak(type) ? `+(${replacement})` : `+${replacement}`,
-            )
-            .join('');
+            const appendableReplacements =
+            solutions.slice(typeSetCount).map(getAppendableReplacement);
+            const replacement = [replace(...replacements), ...appendableReplacements].join('');
             return replacement;
         }
     }
 }
 
-function findRule(solutions: readonly Solution[]): Rule
-{
-    let returnValue: Rule;
-    for (const rule of RULES)
-    {
-        if (matchSolutions(rule.typeSetList, solutions))
-        {
-            returnValue = rule;
-            break;
-        }
-    }
-    return returnValue!;
-}
+const findRuleBySolutions = (solutions: readonly Solution[]): Rule => findRule(solutions, getType);
+
+const getAppendableReplacement =
+({ replacement, type }: Solution): string => isWeak(type) ? `+(${replacement})` : `+${replacement}`;
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
 
-function matchSolutions(typeSets: readonly TypeSet[], solutions: readonly Solution[]): boolean
-{
-    if (typeSets.length > solutions.length)
-        return false;
-    const test =
-    typeSets.every
-    (
-        (typeSet: TypeSet, index: number) =>
-        {
-            const solution = solutions[index];
-            const test = includesType(typeSet, solution.type);
-            return test;
-        },
-    );
-    return test;
-}
+const getType = ({ type }: Solution): SolutionType => type;

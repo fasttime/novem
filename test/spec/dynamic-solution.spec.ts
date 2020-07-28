@@ -1,3 +1,4 @@
+import { calculateAppendOverhead }              from '../../src/calculate-append-overhead';
 import { doEval }                               from '../../src/eval';
 import { DynamicSolution, SimpleSolution }      from '../../src/solution';
 import { SolutionType, calculateSolutionType }  from '../../src/solution-type';
@@ -15,6 +16,55 @@ interface MixedSolutionTestInfo
 
 const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
 [
+    // No solutions
+    {
+        subSolutions: [],
+        expectedType: SolutionType.OBJECT,
+        expectedReplacement: '[]',
+    },
+
+    // Single solutions
+    {
+        subSolutions: [['undefined', '[][[]]', SolutionType.UNDEFINED]],
+        expectedType: SolutionType.UNDEFINED,
+        expectedReplacement: '[][[]]',
+    },
+    {
+        subSolutions: [['true', '!![]', SolutionType.NUMERIC]],
+        expectedType: SolutionType.NUMERIC,
+        expectedReplacement: '!![]',
+    },
+    {
+        subSolutions: [['1', '+!![]', SolutionType.WEAK_NUMERIC]],
+        expectedType: SolutionType.WEAK_NUMERIC,
+        expectedReplacement: '+!![]',
+    },
+    {
+        subSolutions: [['', '[]', SolutionType.OBJECT]],
+        expectedType: SolutionType.OBJECT,
+        expectedReplacement: '[]',
+    },
+    {
+        subSolutions: [['f', '([]+![])[+[]]', SolutionType.STRING]],
+        expectedType: SolutionType.STRING,
+        expectedReplacement: '([]+![])[+[]]',
+    },
+    {
+        subSolutions: [['false0', '![]+[+[]]', SolutionType.PREFIXED_STRING]],
+        expectedType: SolutionType.PREFIXED_STRING,
+        expectedReplacement: '![]+[+[]]',
+    },
+    {
+        subSolutions: [['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING]],
+        expectedType: SolutionType.WEAK_PREFIXED_STRING,
+        expectedReplacement: '+[]+[+[]]',
+    },
+    {
+        subSolutions: [['0false', '[+[]]+![]', SolutionType.COMBINED_STRING]],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+![]',
+    },
+
     // UNDEFINED + UNDEFINED
     {
         subSolutions:
@@ -614,6 +664,80 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+[]+[+[]]+[+[]]+(+[])',
     },
+
+    // COMBINED_STRING
+    {
+        subSolutions:
+        [
+            ['0false', '[+[]]+![]', SolutionType.COMBINED_STRING],
+            ['undefined', '[][[]]', SolutionType.UNDEFINED],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+![]+[][[]]',
+    },
+    {
+        subSolutions:
+        [
+            ['0false', '[+[]]+![]', SolutionType.COMBINED_STRING],
+            ['false', '![]', SolutionType.NUMERIC],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+![]+![]',
+    },
+    {
+        subSolutions:
+        [
+            ['0false', '[+[]]+![]', SolutionType.COMBINED_STRING],
+            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+![]+(+[])',
+    },
+    {
+        subSolutions:
+        [
+            ['1true', '[+!![]]+!![]', SolutionType.COMBINED_STRING],
+            ['0', '[+[]]', SolutionType.OBJECT],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+!![]]+!![]+[+[]]',
+    },
+    {
+        subSolutions:
+        [
+            ['', '[]+[]', SolutionType.COMBINED_STRING],
+            ['f', '(![]+[])[+[]]', SolutionType.STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[]+[]+(![]+[])[+[]]',
+    },
+    {
+        subSolutions:
+        [
+            ['0undefined', '[+[]]+[][[]]', SolutionType.COMBINED_STRING],
+            ['undefined0', '[][[]]+[+[]]', SolutionType.PREFIXED_STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+[][[]]+[][[]]+[+[]]',
+    },
+    {
+        subSolutions:
+        [
+            ['0undefined', '[+[]]+[][[]]', SolutionType.COMBINED_STRING],
+            ['10', '+!![]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+[][[]]+(+!![]+[+[]])',
+    },
+    {
+        subSolutions:
+        [
+            ['00', '[+[]]+(+[])', SolutionType.COMBINED_STRING],
+            ['00', '[+[]]+(+[])', SolutionType.COMBINED_STRING],
+        ],
+        expectedType: SolutionType.COMBINED_STRING,
+        expectedReplacement: '[+[]]+(+[])+[+[]]+(+[])',
+    },
 ];
 
 describe
@@ -623,52 +747,40 @@ describe
     {
         it
         (
-            'when empty',
-            () =>
-            {
-                const solution = new DynamicSolution();
-
-                assert.strictEqual(solution.length, 2);
-                assert.strictEqual(solution.replacement, '[]');
-                assert.strictEqual(solution.source, '');
-                assert.strictEqual(solution.type, SolutionType.OBJECT);
-            },
-        );
-
-        it
-        (
-            'when containing one solution',
-            () =>
-            {
-                const solution = new DynamicSolution();
-                solution.append(new SimpleSolution('Infinity', '1/0', SolutionType.NUMERIC));
-
-                assert.strictEqual(solution.length, 3);
-                assert.strictEqual(solution.replacement, '1/0');
-                assert.strictEqual(solution.source, 'Infinity');
-                assert.strictEqual(solution.type, SolutionType.NUMERIC);
-            },
-        );
-
-        it
-        (
             'when containing multiple solutions',
             () =>
             {
                 const solution = new DynamicSolution();
+                let expectedLength = 0;
+                const types: SolutionType[] = [];
                 ['+![]', '+!![]', '!![]+!![]'].forEach
                 (
                     (expr: string, index: number) =>
-                    solution.append
-                    (new SimpleSolution(String(index), expr, SolutionType.WEAK_NUMERIC)),
+                    {
+                        solution.append
+                        (new SimpleSolution(String(index), expr, SolutionType.WEAK_NUMERIC));
+                        expectedLength += expr.length;
+                        types.push(SolutionType.WEAK_NUMERIC);
+                    },
                 );
-                for (const char of 'abc')
-                    solution.prepend(new SimpleSolution(char, `"${char}"`, SolutionType.STRING));
-                const expectedReplacement = '"c"+"b"+"a"+(+![])+(+!![])+(!![]+!![])';
+                ['([]+!![])[+[]]', '([]+![])[+!![]]', '([]+![])[+[]]'].forEach
+                (
+                    (expr: string, index: number) =>
+                    {
+                        solution.prepend
+                        (new SimpleSolution('taf'[index], expr, SolutionType.STRING));
+                        expectedLength += expr.length;
+                        types.unshift(SolutionType.STRING);
+                    },
+                );
+                expectedLength += calculateAppendOverhead(types);
+                const expectedReplacement =
+                '([]+![])[+[]]+([]+![])[+!![]]+([]+!![])[+[]]+(+![])+(+!![])+(!![]+!![])';
 
-                assert.strictEqual(solution.length, expectedReplacement.length);
+                assert.strictEqual(solution.length, expectedLength);
                 assert.strictEqual(solution.replacement, expectedReplacement);
-                assert.strictEqual(solution.source, 'cba012');
+                assert.strictEqual(solution.replacement.length, expectedLength);
+                assert.strictEqual(solution.source, 'fat012');
                 assert.strictEqual(solution.type, SolutionType.COMBINED_STRING);
             },
         );
@@ -718,7 +830,8 @@ describe
                         info
                         .subSolutions
                         .map(([,, type]: SolutionInfo) => SolutionType[type])
-                        .join(' + ');
+                        .join(' + ') ||
+                        '(none)';
                         const returnValue = { ...info, title };
                         return returnValue;
                     },
@@ -728,14 +841,20 @@ describe
                     ({ subSolutions, expectedReplacement, expectedType }: MixedSolutionTestInfo) =>
                     {
                         const solution = new DynamicSolution();
+                        let expectedLength =
+                        calculateAppendOverhead
+                        (subSolutions.map(([,, type]: SolutionInfo) => type));
                         for (const [source, replacement, type] of subSolutions)
                         {
                             assert.strictEqual(calculateSolutionType(replacement), type);
                             solution.append(new SimpleSolution(source, replacement, type));
+                            expectedLength += replacement.length;
                         }
 
+                        assert.strictEqual(solution.length, expectedLength);
                         assert.strictEqual(solution.replacement, expectedReplacement);
-                        assert.strictEqual(solution.source, doEval(expectedReplacement));
+                        assert.strictEqual(solution.replacement.length, expectedLength);
+                        assert.strictEqual(solution.source, String(doEval(expectedReplacement)));
                         assert.strictEqual(solution.type, expectedType);
                         assert.strictEqual
                         (calculateSolutionType(solution.replacement), expectedType);

@@ -66,7 +66,8 @@ export function test(callback)
 export function compile()
 {
     const { dts, js } = src('src/**/*.ts').pipe(gulpTypescript.createProject('tsconfig.json')());
-    const condition = ['novem.d.ts', 'solution.d.ts', 'solution-type.d.ts'];
+    const condition =
+    ['calculate-append-overhead.d.ts', 'novem.d.ts', 'solution.d.ts', 'solution-type.d.ts'];
     const stream =
     mergeStream
     (dts.pipe(gulpIgnore.include(condition)).pipe(dest('lib')), js.pipe(dest('.tmp-out')));
