@@ -1,5 +1,6 @@
-import { SolutionType }                         from './solution-type';
-import { TypeSet, createTypeSet, includesType } from './type-set';
+import { SolutionType }                 from './solution-type';
+import { createTypeSet, includesType }  from './type-set';
+import type { TypeSet }                 from './type-set';
 
 export interface Rule
 {

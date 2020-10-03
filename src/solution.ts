@@ -1,4 +1,5 @@
-import { Rule, findRule }                                       from './rule';
+import { findRule }                                             from './rule';
+import type { Rule }                                            from './rule';
 import { SolutionType }                                         from './solution-type';
 import { isArithmetic, isLoose, isString, isUndefined, isWeak } from './type-set';
 

@@ -1,7 +1,7 @@
-import { SimpleSolution }   from '../../src/solution';
-import { SolutionType }     from '../../src/solution-type';
-import assert               from 'assert';
-import { ParamCollection }  from 'ebdd';
+import { SimpleSolution }       from '../../src/solution';
+import { SolutionType }         from '../../src/solution-type';
+import assert                   from 'assert';
+import type { ParamCollection } from 'ebdd';
 
 interface IsAttrTestInfo
 {

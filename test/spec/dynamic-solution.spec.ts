@@ -7,9 +7,11 @@ import type { ParamCollection }                 from 'ebdd';
 
 type SolutionInfo = [string, string, SolutionType];
 
+type SubSolution = [source: string, replacement: string, type: SolutionType];
+
 interface MixedSolutionTestInfo
 {
-    readonly subSolutions:          SolutionInfo[];
+    readonly subSolutions:          readonly SubSolution[];
     readonly expectedReplacement:   string;
     readonly expectedType:          SolutionType;
 }

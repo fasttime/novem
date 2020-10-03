@@ -1,6 +1,6 @@
-import { findRule }     from './rule';
-import { SolutionType } from './solution-type';
-import { isWeak }       from './type-set';
+import { findRule }             from './rule';
+import type { SolutionType }    from './solution-type';
+import { isWeak }               from './type-set';
 
 export const calculateAppendOverhead =
 (solutionTypes: readonly SolutionType[]): number =>
