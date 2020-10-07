@@ -1,5 +1,4 @@
 import { findRule }                                             from './rule';
-import type { Rule }                                            from './rule';
 import { SolutionType }                                         from './solution-type';
 import { isArithmetic, isLoose, isString, isUndefined, isWeak } from './type-set';
 
@@ -105,7 +104,7 @@ export class DynamicSolution extends AbstractSolution
                 return solutions[0].type;
             default:
                 {
-                    const { solutionType } = findRuleBySolutions(solutions);
+                    const { solutionType } = findRule(solutions);
                     return solutionType;
                 }
         }
@@ -137,22 +136,19 @@ function calculateReplacement(solutions: readonly Solution[]): string
             return solutions[0].replacement;
         default:
         {
-            const { replace, typeSetList } = findRuleBySolutions(solutions);
+            const { replace, typeSetList } = findRule(solutions);
             const typeSetCount = typeSetList.length;
-            const replacements = solutions.slice(0, typeSetCount).map(getReplacement);
-            const appendableReplacements =
-            solutions.slice(typeSetCount).map(getAppendableReplacement);
-            const replacement = [replace(...replacements), ...appendableReplacements].join('');
+            const replacements = solutions.slice(typeSetCount).map(getAppendableReplacement);
+            const ruleReplacements = solutions.slice(0, typeSetCount).map(getReplacement);
+            const firstReplacement = replace(...ruleReplacements);
+            replacements.unshift(firstReplacement);
+            const replacement = replacements.join('');
             return replacement;
         }
     }
 }
 
-const findRuleBySolutions = (solutions: readonly Solution[]): Rule => findRule(solutions, getType);
-
 const getAppendableReplacement =
 ({ replacement, type }: Solution): string => isWeak(type) ? `+(${replacement})` : `+${replacement}`;
 
 const getReplacement = ({ replacement }: Solution): string => replacement;
-
-const getType = ({ type }: Solution): SolutionType => type;

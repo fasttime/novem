@@ -1,4 +1,3 @@
-import { calculateAppendOverhead }              from '../../src/calculate-append-overhead';
 import { doEval }                               from '../../src/eval';
 import { DynamicSolution, SimpleSolution }      from '../../src/solution';
 import { SolutionType, calculateSolutionType }  from '../../src/solution-type';
@@ -753,16 +752,12 @@ describe
             () =>
             {
                 const solution = new DynamicSolution();
-                let expectedLength = 0;
-                const types: SolutionType[] = [];
                 ['+![]', '+!![]', '!![]+!![]'].forEach
                 (
                     (expr: string, index: number) =>
                     {
                         solution.append
                         (new SimpleSolution(String(index), expr, SolutionType.WEAK_NUMERIC));
-                        expectedLength += expr.length;
-                        types.push(SolutionType.WEAK_NUMERIC);
                     },
                 );
                 ['([]+!![])[+[]]', '([]+![])[+!![]]', '([]+![])[+[]]'].forEach
@@ -771,17 +766,13 @@ describe
                     {
                         solution.prepend
                         (new SimpleSolution('taf'[index], expr, SolutionType.STRING));
-                        expectedLength += expr.length;
-                        types.unshift(SolutionType.STRING);
                     },
                 );
-                expectedLength += calculateAppendOverhead(types);
                 const expectedReplacement =
                 '([]+![])[+[]]+([]+![])[+!![]]+([]+!![])[+[]]+(+![])+(+!![])+(!![]+!![])';
 
-                assert.strictEqual(solution.length, expectedLength);
+                assert.strictEqual(solution.length, expectedReplacement.length);
                 assert.strictEqual(solution.replacement, expectedReplacement);
-                assert.strictEqual(solution.replacement.length, expectedLength);
                 assert.strictEqual(solution.source, 'fat012');
                 assert.strictEqual(solution.type, SolutionType.COMBINED_STRING);
             },
@@ -843,19 +834,14 @@ describe
                     ({ subSolutions, expectedReplacement, expectedType }: MixedSolutionTestInfo) =>
                     {
                         const solution = new DynamicSolution();
-                        let expectedLength =
-                        calculateAppendOverhead
-                        (subSolutions.map(([,, type]: SolutionInfo) => type));
                         for (const [source, replacement, type] of subSolutions)
                         {
                             assert.strictEqual(calculateSolutionType(replacement), type);
                             solution.append(new SimpleSolution(source, replacement, type));
-                            expectedLength += replacement.length;
                         }
 
-                        assert.strictEqual(solution.length, expectedLength);
+                        assert.strictEqual(solution.length, expectedReplacement.length);
                         assert.strictEqual(solution.replacement, expectedReplacement);
-                        assert.strictEqual(solution.replacement.length, expectedLength);
                         assert.strictEqual(solution.source, String(doEval(expectedReplacement)));
                         assert.strictEqual(solution.type, expectedType);
                         assert.strictEqual
