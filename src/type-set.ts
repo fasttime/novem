@@ -13,9 +13,6 @@ export function createTypeSet(...types: SolutionType[]): TypeSet
 export const includesType =
 (typeSet: TypeSet, type: SolutionType): boolean => (typeSet & type) !== 0;
 
-export const isArithmetic =
-makeIsAttr(SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.WEAK_NUMERIC);
-
 export const isLoose =
 makeIsAttr
 (
@@ -33,9 +30,6 @@ makeIsAttr
     SolutionType.WEAK_PREFIXED_STRING,
     SolutionType.COMBINED_STRING,
 );
-
-export const isUndefined =
-makeIsAttr(SolutionType.UNDEFINED);
 
 export const isWeak =
 makeIsAttr(SolutionType.WEAK_NUMERIC, SolutionType.WEAK_PREFIXED_STRING);

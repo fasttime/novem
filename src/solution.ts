@@ -1,12 +1,10 @@
-import { findRule }                                             from './rule';
-import { SolutionType }                                         from './solution-type';
-import { isArithmetic, isLoose, isString, isUndefined, isWeak } from './type-set';
+import { findRule }                     from './rule';
+import { SolutionType }                 from './solution-type';
+import { isLoose, isString, isWeak }    from './type-set';
 
 export interface Solution
 {
-    readonly isArithmetic:  boolean;
     readonly isString:      boolean;
-    readonly isUndefined:   boolean;
     readonly isWeak:        boolean;
     readonly length:        number;
     readonly replacement:   string;
@@ -16,11 +14,6 @@ export interface Solution
 
 abstract class AbstractSolution implements Solution
 {
-    public get isArithmetic(): boolean
-    {
-        return isArithmetic(this.type);
-    }
-
     public get isLoose(): boolean
     {
         return isLoose(this.type);
@@ -29,11 +22,6 @@ abstract class AbstractSolution implements Solution
     public get isString(): boolean
     {
         return isString(this.type);
-    }
-
-    public get isUndefined(): boolean
-    {
-        return isUndefined(this.type);
     }
 
     public get isWeak(): boolean

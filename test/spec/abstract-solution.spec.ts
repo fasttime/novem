@@ -5,7 +5,7 @@ import type { ParamCollection } from 'ebdd';
 
 interface IsAttrTestInfo
 {
-    readonly isAttrName:    'isArithmetic' | 'isLoose' | 'isString' | 'isUndefined' | 'isWeak';
+    readonly isAttrName:    'isLoose' | 'isString' | 'isWeak';
     readonly solutionType:  SolutionType;
     readonly expectedValue: boolean;
 }
@@ -13,47 +13,6 @@ interface IsAttrTestInfo
 const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
 [
     {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.UNDEFINED,
-        expectedValue:  true,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.NUMERIC,
-        expectedValue:  true,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.WEAK_NUMERIC,
-        expectedValue:  true,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.OBJECT,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.PREFIXED_STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.WEAK_PREFIXED_STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isArithmetic',
-        solutionType:   SolutionType.COMBINED_STRING,
-        expectedValue:  false,
-    },
-
-    {
         isAttrName:     'isLoose',
         solutionType:   SolutionType.UNDEFINED,
         expectedValue:  false,
@@ -133,47 +92,6 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
         isAttrName:     'isString',
         solutionType:   SolutionType.COMBINED_STRING,
         expectedValue:  true,
-    },
-
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.UNDEFINED,
-        expectedValue:  true,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.NUMERIC,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.WEAK_NUMERIC,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.OBJECT,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.PREFIXED_STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.WEAK_PREFIXED_STRING,
-        expectedValue:  false,
-    },
-    {
-        isAttrName:     'isUndefined',
-        solutionType:   SolutionType.COMBINED_STRING,
-        expectedValue:  false,
     },
 
     {
