@@ -19,12 +19,12 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
     },
     {
         isAttrName:     'isLoose',
-        solutionType:   SolutionType.NUMERIC,
+        solutionType:   SolutionType.ALGEBRAIC,
         expectedValue:  false,
     },
     {
         isAttrName:     'isLoose',
-        solutionType:   SolutionType.WEAK_NUMERIC,
+        solutionType:   SolutionType.WEAK_ALGEBRAIC,
         expectedValue:  true,
     },
     {
@@ -60,12 +60,12 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
     },
     {
         isAttrName:     'isString',
-        solutionType:   SolutionType.NUMERIC,
+        solutionType:   SolutionType.ALGEBRAIC,
         expectedValue:  false,
     },
     {
         isAttrName:     'isString',
-        solutionType:   SolutionType.WEAK_NUMERIC,
+        solutionType:   SolutionType.WEAK_ALGEBRAIC,
         expectedValue:  false,
     },
     {
@@ -101,12 +101,12 @@ const IS_TYPE_TEST_INFOS: ParamCollection<IsAttrTestInfo> =
     },
     {
         isAttrName:     'isWeak',
-        solutionType:   SolutionType.NUMERIC,
+        solutionType:   SolutionType.ALGEBRAIC,
         expectedValue:  false,
     },
     {
         isAttrName:     'isWeak',
-        solutionType:   SolutionType.WEAK_NUMERIC,
+        solutionType:   SolutionType.WEAK_ALGEBRAIC,
         expectedValue:  true,
     },
     {

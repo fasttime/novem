@@ -16,7 +16,7 @@ export const includesType =
 export const isLoose =
 makeIsAttr
 (
-    SolutionType.WEAK_NUMERIC,
+    SolutionType.WEAK_ALGEBRAIC,
     SolutionType.PREFIXED_STRING,
     SolutionType.WEAK_PREFIXED_STRING,
     SolutionType.COMBINED_STRING,
@@ -32,7 +32,7 @@ makeIsAttr
 );
 
 export const isWeak =
-makeIsAttr(SolutionType.WEAK_NUMERIC, SolutionType.WEAK_PREFIXED_STRING);
+makeIsAttr(SolutionType.WEAK_ALGEBRAIC, SolutionType.WEAK_PREFIXED_STRING);
 
 function makeIsAttr(...types: SolutionType[]): (type: SolutionType) => boolean
 {

@@ -3,8 +3,8 @@ import { doEval, tryEval } from './eval';
 export enum SolutionType
 {
     UNDEFINED               = 0b1,
-    NUMERIC                 = 0b10,
-    WEAK_NUMERIC            = 0b100,
+    ALGEBRAIC               = 0b10,
+    WEAK_ALGEBRAIC          = 0b100,
     OBJECT                  = 0b1000,
     STRING                  = 0b10000,
     PREFIXED_STRING         = 0b100000,
@@ -23,11 +23,11 @@ export const calculateSolutionType =
     switch (typeof value as string)
     {
         case 'boolean':
-            return SolutionType.NUMERIC;
+            return SolutionType.ALGEBRAIC;
         case 'number':
             {
                 const type =
-                isWeak(replacement, value) ? SolutionType.WEAK_NUMERIC : SolutionType.NUMERIC;
+                isWeak(replacement, value) ? SolutionType.WEAK_ALGEBRAIC : SolutionType.ALGEBRAIC;
                 return type;
             }
         case 'object':

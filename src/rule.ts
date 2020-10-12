@@ -18,7 +18,7 @@ export const RULES: readonly Rule[] =
         [
             createTypeSet(SolutionType.UNDEFINED),
             createTypeSet(SolutionType.UNDEFINED),
-            createTypeSet(SolutionType.WEAK_NUMERIC),
+            createTypeSet(SolutionType.WEAK_ALGEBRAIC),
         ],
         replace: (r1: string, r2: string, r3: string): string => `${r1}+(${r2}+[${r3}])`,
         solutionType: SolutionType.PREFIXED_STRING,
@@ -56,7 +56,7 @@ export const RULES: readonly Rule[] =
         typeSetList:
         [
             createTypeSet(SolutionType.UNDEFINED),
-            createTypeSet(SolutionType.NUMERIC, SolutionType.WEAK_NUMERIC),
+            createTypeSet(SolutionType.ALGEBRAIC, SolutionType.WEAK_ALGEBRAIC),
         ],
         replace: (r1: string, r2: string): string => `${r1}+[${r2}]`,
         solutionType: SolutionType.PREFIXED_STRING,
@@ -76,13 +76,13 @@ export const RULES: readonly Rule[] =
         solutionType: SolutionType.PREFIXED_STRING,
     },
 
-    // NUMERIC, PREFIXED_STRING
+    // ALGEBRAIC, PREFIXED_STRING
     {
         typeSetList:
         [
-            createTypeSet(SolutionType.NUMERIC),
+            createTypeSet(SolutionType.ALGEBRAIC),
             createTypeSet
-            (SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.PREFIXED_STRING),
+            (SolutionType.UNDEFINED, SolutionType.ALGEBRAIC, SolutionType.PREFIXED_STRING),
         ],
         replace: (r1: string, r2: string): string => `[${r1}]+${r2}`,
         solutionType: SolutionType.COMBINED_STRING,
@@ -90,25 +90,25 @@ export const RULES: readonly Rule[] =
     {
         typeSetList:
         [
-            createTypeSet(SolutionType.NUMERIC),
-            createTypeSet(SolutionType.WEAK_NUMERIC),
+            createTypeSet(SolutionType.ALGEBRAIC),
+            createTypeSet(SolutionType.WEAK_ALGEBRAIC),
         ],
         replace: (r1: string, r2: string): string => `${r1}+[${r2}]`,
         solutionType: SolutionType.PREFIXED_STRING,
     },
     {
-        typeSetList: [createTypeSet(SolutionType.NUMERIC, SolutionType.PREFIXED_STRING)],
+        typeSetList: [createTypeSet(SolutionType.ALGEBRAIC, SolutionType.PREFIXED_STRING)],
         replace: (r1: string): string => r1,
         solutionType: SolutionType.PREFIXED_STRING,
     },
 
-    // WEAK_NUMERIC, WEAK_PREFIXED_STRING
+    // WEAK_ALGEBRAIC, WEAK_PREFIXED_STRING
     {
         typeSetList:
         [
-            createTypeSet(SolutionType.WEAK_NUMERIC),
+            createTypeSet(SolutionType.WEAK_ALGEBRAIC),
             createTypeSet
-            (SolutionType.UNDEFINED, SolutionType.NUMERIC, SolutionType.PREFIXED_STRING),
+            (SolutionType.UNDEFINED, SolutionType.ALGEBRAIC, SolutionType.PREFIXED_STRING),
         ],
         replace: (r1: string, r2: string): string => `[${r1}]+${r2}`,
         solutionType: SolutionType.COMBINED_STRING,
@@ -116,14 +116,15 @@ export const RULES: readonly Rule[] =
     {
         typeSetList:
         [
-            createTypeSet(SolutionType.WEAK_NUMERIC),
-            createTypeSet(SolutionType.WEAK_NUMERIC),
+            createTypeSet(SolutionType.WEAK_ALGEBRAIC),
+            createTypeSet(SolutionType.WEAK_ALGEBRAIC),
         ],
         replace: (r1: string, r2: string): string => `${r1}+[${r2}]`,
         solutionType: SolutionType.WEAK_PREFIXED_STRING,
     },
     {
-        typeSetList: [createTypeSet(SolutionType.WEAK_NUMERIC, SolutionType.WEAK_PREFIXED_STRING)],
+        typeSetList:
+        [createTypeSet(SolutionType.WEAK_ALGEBRAIC, SolutionType.WEAK_PREFIXED_STRING)],
         replace: (r1: string): string => r1,
         solutionType: SolutionType.WEAK_PREFIXED_STRING,
     },

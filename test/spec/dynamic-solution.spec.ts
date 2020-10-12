@@ -31,13 +31,13 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedReplacement: '[][[]]',
     },
     {
-        subSolutions: [['true', '!![]', SolutionType.NUMERIC]],
-        expectedType: SolutionType.NUMERIC,
+        subSolutions: [['true', '!![]', SolutionType.ALGEBRAIC]],
+        expectedType: SolutionType.ALGEBRAIC,
         expectedReplacement: '!![]',
     },
     {
-        subSolutions: [['1', '+!![]', SolutionType.WEAK_NUMERIC]],
-        expectedType: SolutionType.WEAK_NUMERIC,
+        subSolutions: [['1', '+!![]', SolutionType.WEAK_ALGEBRAIC]],
+        expectedType: SolutionType.WEAK_ALGEBRAIC,
         expectedReplacement: '+!![]',
     },
     {
@@ -82,7 +82,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         [
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[]+[][[]]+[][[]]+![]',
@@ -92,7 +92,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         [
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[][[]]+([][[]]+[+[]])',
@@ -162,7 +162,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
-            ['true', '!![]', SolutionType.NUMERIC],
+            ['true', '!![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[][[]]+[!![]]',
@@ -171,7 +171,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
-            ['2', '!![]+!![]', SolutionType.WEAK_NUMERIC],
+            ['2', '!![]+!![]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[][[]]+[!![]+!![]]',
@@ -222,11 +222,11 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         expectedReplacement: '[][[]]+([]+!![])[+[]]+![]',
     },
 
-    // NUMERIC
+    // ALGEBRAIC
     {
         subSolutions:
         [
-            ['true', '!![]', SolutionType.NUMERIC],
+            ['true', '!![]', SolutionType.ALGEBRAIC],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
         expectedType: SolutionType.COMBINED_STRING,
@@ -235,8 +235,8 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
-            ['true', '!![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
+            ['true', '!![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+!![]',
@@ -244,8 +244,8 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['0', '[+[]][+[]]', SolutionType.NUMERIC],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '[+[]][+[]]', SolutionType.ALGEBRAIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '[+[]][+[]]+[+[]]',
@@ -253,7 +253,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
             ['0', '[+[]]', SolutionType.OBJECT],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
@@ -262,7 +262,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
             ['a', '([]+![])[+!![]]', SolutionType.STRING],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
@@ -271,7 +271,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
             ['falsefalse', '![]+[![]]', SolutionType.PREFIXED_STRING],
         ],
         expectedType: SolutionType.COMBINED_STRING,
@@ -280,7 +280,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
             ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
@@ -289,18 +289,18 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
             ['aa', '([]+![])[+!![]]+([]+![])[+!![]]', SolutionType.COMBINED_STRING],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '![]+([]+![])[+!![]]+([]+![])[+!![]]',
     },
 
-    // WEAK_NUMERIC
+    // WEAK_ALGEBRAIC
     {
         subSolutions:
         [
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
             ['undefined', '[][[]]', SolutionType.UNDEFINED],
         ],
         expectedType: SolutionType.COMBINED_STRING,
@@ -309,8 +309,8 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
-            ['true', '!![]', SolutionType.NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
+            ['true', '!![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+!![]',
@@ -318,8 +318,8 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+!![]+[+[]]',
@@ -327,7 +327,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
             ['0', '[+[]]', SolutionType.OBJECT],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
@@ -336,7 +336,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
             ['f', '([]+![])[+[]]', SolutionType.STRING],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
@@ -345,7 +345,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
             ['false', '![]+[]', SolutionType.PREFIXED_STRING],
         ],
         expectedType: SolutionType.COMBINED_STRING,
@@ -354,7 +354,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
             ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
@@ -363,7 +363,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
     {
         subSolutions:
         [
-            ['1', '+!![]', SolutionType.WEAK_NUMERIC],
+            ['1', '+!![]', SolutionType.WEAK_ALGEBRAIC],
             ['falsefalse', '[![]]+![]', SolutionType.COMBINED_STRING],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
@@ -384,7 +384,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['false', '[![]]', SolutionType.OBJECT],
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+![]',
@@ -393,7 +393,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['false', '[![]]', SolutionType.OBJECT],
-            ['2', '!![]+!![]', SolutionType.WEAK_NUMERIC],
+            ['2', '!![]+!![]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[![]]+(!![]+!![])',
@@ -458,7 +458,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
-            ['0', '[[]][+[]]++', SolutionType.NUMERIC],
+            ['0', '[[]][+[]]++', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+[[]][+[]]++',
@@ -467,7 +467,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['a', '(![]+[])[+!![]]', SolutionType.STRING],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '(![]+[])[+!![]]+(+[])',
@@ -532,7 +532,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['true0', '!![]+[+[]]', SolutionType.PREFIXED_STRING],
-            ['true', '!![]', SolutionType.NUMERIC],
+            ['true', '!![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '!![]+[+[]]+!![]',
@@ -541,7 +541,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['true0', '!![]+[+[]]', SolutionType.PREFIXED_STRING],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.PREFIXED_STRING,
         expectedReplacement: '!![]+[+[]]+(+[])',
@@ -606,7 +606,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+[]+[+[]]+![]',
@@ -615,7 +615,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['00', '+[]+[+[]]', SolutionType.WEAK_PREFIXED_STRING],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.WEAK_PREFIXED_STRING,
         expectedReplacement: '+[]+[+[]]+(+[])',
@@ -680,7 +680,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['0false', '[+[]]+![]', SolutionType.COMBINED_STRING],
-            ['false', '![]', SolutionType.NUMERIC],
+            ['false', '![]', SolutionType.ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+![]+![]',
@@ -689,7 +689,7 @@ const MIXED_SOLUTION_TEST_INFOS: ParamCollection<MixedSolutionTestInfo> =
         subSolutions:
         [
             ['0false', '[+[]]+![]', SolutionType.COMBINED_STRING],
-            ['0', '+[]', SolutionType.WEAK_NUMERIC],
+            ['0', '+[]', SolutionType.WEAK_ALGEBRAIC],
         ],
         expectedType: SolutionType.COMBINED_STRING,
         expectedReplacement: '[+[]]+![]+(+[])',
@@ -757,7 +757,7 @@ describe
                     (expr: string, index: number) =>
                     {
                         solution.append
-                        (new SimpleSolution(String(index), expr, SolutionType.WEAK_NUMERIC));
+                        (new SimpleSolution(String(index), expr, SolutionType.WEAK_ALGEBRAIC));
                     },
                 );
                 ['([]+!![])[+[]]', '([]+![])[+!![]]', '([]+![])[+[]]'].forEach
@@ -789,7 +789,8 @@ describe
                     () =>
                     {
                         const solution = new DynamicSolution();
-                        solution.append(new SimpleSolution('0', '+[]', SolutionType.WEAK_NUMERIC));
+                        solution
+                        .append(new SimpleSolution('0', '+[]', SolutionType.WEAK_ALGEBRAIC));
                         solution.append(new SimpleSolution('', '[]', SolutionType.OBJECT));
                         assert.strictEqual(solution.source, '0');
                     },
@@ -801,7 +802,8 @@ describe
                     () =>
                     {
                         const solution = new DynamicSolution();
-                        solution.append(new SimpleSolution('0', '+[]', SolutionType.WEAK_NUMERIC));
+                        solution
+                        .append(new SimpleSolution('0', '+[]', SolutionType.WEAK_ALGEBRAIC));
                         solution.append(new SimpleSolution(undefined, '[]', SolutionType.OBJECT));
                         assert.strictEqual(solution.source, undefined);
                     },
