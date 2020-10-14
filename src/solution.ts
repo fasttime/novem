@@ -12,7 +12,7 @@ export interface Solution
     readonly type:          SolutionType;
 }
 
-abstract class AbstractSolution implements Solution
+export abstract class AbstractSolution implements Solution
 {
     public get isLoose(): boolean
     {
@@ -96,6 +96,37 @@ export class DynamicSolution extends AbstractSolution
                     return solutionType;
                 }
         }
+    }
+}
+
+export class
+// @ts-expect-error
+LazySolution
+extends AbstractSolution
+{
+    public constructor
+    (
+        public readonly source: string | undefined,
+        createReplacement:      () => string,
+        public readonly type:   SolutionType,
+    )
+    {
+        super();
+        const get =
+        function (this: LazySolution): string
+        {
+            const replacement = createReplacement();
+            this.defineReplacement({ value: replacement, writable: true });
+            return replacement;
+        };
+        this.defineReplacement({ get });
+    }
+
+    private defineReplacement(attributes: PropertyDescriptor): void
+    {
+        attributes.configurable = true;
+        attributes.enumerable   = true;
+        Object.defineProperty(this, 'replacement', attributes);
     }
 }
 

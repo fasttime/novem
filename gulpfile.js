@@ -7,6 +7,7 @@ import gulpTypescript       from 'gulp-typescript';
 import mergeStream          from 'merge-stream';
 import { createRequire }    from 'module';
 import { rollup }           from 'rollup';
+import rollupPluginCleanup  from 'rollup-plugin-cleanup';
 
 const { dest, parallel, series, src } = gulp;
 
@@ -86,6 +87,7 @@ export async function bundle()
             if (warning.code !== 'THIS_IS_UNDEFINED')
                 console.error(warning.message);
         },
+        plugins: [rollupPluginCleanup({ comments: /^(?!\/ *@ts-)/ })],
     };
     const outputOptions =
     { banner: `// novem ${version} – ${homepage}\n`, file: 'lib/novem.js', format: 'esm' };
