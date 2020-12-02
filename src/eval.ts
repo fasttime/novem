@@ -1,14 +1,14 @@
 export const INVALID_EXPR = { };
 
-export function doEval(expr: string): unknown
+export function evalExpr(expr: string): unknown
 {
-    const value = tryEval(expr);
+    const value = tryEvalExpr(expr);
     if (value === INVALID_EXPR)
         throw SyntaxError(`Invalid expression ${expr}`);
     return value;
 }
 
-export function tryEval(expr: string): unknown
+export function tryEvalExpr(expr: string): unknown
 {
     let fn: Function;
     try
@@ -19,6 +19,6 @@ export function tryEval(expr: string): unknown
     {
         return INVALID_EXPR;
     }
-    const value = fn() as unknown;
+    const value: unknown = fn();
     return value;
 }

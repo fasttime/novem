@@ -1,4 +1,4 @@
-import { doEval }                               from '../../src/eval';
+import { evalExpr }                             from '../../src/eval';
 import { DynamicSolution, SimpleSolution }      from '../../src/solution';
 import { SolutionType, calculateSolutionType }  from '../../src/solution-type';
 import assert                                   from 'assert';
@@ -844,7 +844,7 @@ describe
 
                         assert.strictEqual(solution.length, expectedReplacement.length);
                         assert.strictEqual(solution.replacement, expectedReplacement);
-                        assert.strictEqual(solution.source, String(doEval(expectedReplacement)));
+                        assert.strictEqual(solution.source, String(evalExpr(expectedReplacement)));
                         assert.strictEqual(solution.type, expectedType);
                         assert.strictEqual
                         (calculateSolutionType(solution.replacement), expectedType);

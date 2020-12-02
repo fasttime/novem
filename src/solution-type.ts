@@ -1,4 +1,4 @@
-import { doEval, tryEval } from './eval';
+import { evalExpr, tryEvalExpr } from './eval';
 
 export enum SolutionType
 {
@@ -17,7 +17,7 @@ Object.freeze(SolutionType);
 export const calculateSolutionType =
 (replacement: string): SolutionType | undefined =>
 {
-    const value = doEval(replacement);
+    const value = evalExpr(replacement);
     if (value === undefined || value ===  null)
         return SolutionType.UNDEFINED;
     switch (typeof value as string)
@@ -49,10 +49,10 @@ export const calculateSolutionType =
 };
 
 const isCombined =
-(replacement: string, value: unknown): boolean => !value !== tryEval(`!${replacement}`);
+(replacement: string, value: unknown): boolean => !value !== tryEvalExpr(`!${replacement}`);
 
 const isPrefixed =
-(replacement: string, value: unknown): boolean => `0${value}` !== tryEval(`0+${replacement}`);
+(replacement: string, value: unknown): boolean => `0${value}` !== tryEvalExpr(`0+${replacement}`);
 
 const isWeak =
-(replacement: string, value: unknown): boolean => `${value}` !== tryEval(`""+${replacement}`);
+(replacement: string, value: unknown): boolean => `${value}` !== tryEvalExpr(`""+${replacement}`);
